@@ -1,74 +1,79 @@
-# Card Project - Phase 1
+# Card Project -Phase 1
+
+After following the introduction we are ready to start looking at some of the code. We will start with the <code>database.py</code> file. This is part of the final step of setup.
 
 ## Set-up
 
-### Server
+### SQL Tables/Data
 
-This project will be running on an AWS EC2 instance. I have selected a Ubuntu 14.04 LTS Operating System(OS), and the commands through out the set-up will be based on that. If another OS is used, the commands could differ.
+We have automated the process of creating the SQL Tables and inserting sample data for them. This will allow us to DROP tables and revert to a clean slate as needed.
 
-I will presume knowledge on how to create an instance and how to access it using SSH. You can follow any basic tutorial or guide.
+Once in the /Phase 1 directory we can run the python scrip with:
 
-One thing that we will need is two new inbound rules added to the security group. You can click "Security Groups" under "Networking & Security" on the right side bar. The right click on the specific Security Group for your instance, and select "Edit inbound rules".
+<code>python3 database.py</code>
 
-The first rule will be type HTTP, there is no need to edit any other part of it. We can let the source be Anywhere.
+The command interface will provide information on the success of the execution.
 
-The second rule will be "Custom TCP Rule", Port Range "8080", Source "Anywhere". This rule will alow us to use port 8080 to test our server from our local computer's browser.
+### Breakdown the code
 
-## Software
+<code>import pymysql</code>
 
-We can start with two commands for our new instance to make sure that it is up to date.
+We begin by just importing the module needed for the connection to MySQL. It includes everything we will be referencing through out the code.
 
-<code>$ sudo apt-get update</code><br />
-<code>$ sudo apt-get dist-upgrade</code>
+<code>try:
+    cnn = pymysql.connect(
+        host="localhost",
+        user="root",  # your username
+        password='root',
+        database="bb_cards")  # name of the data base
+    print("It Works!!")</code>
 
-(Press "Y" when prompted)
+Here we are creating an object that will be used as the connection to the database by using the connect() function. The connection function takes a few parameters. The database is local, so the host is "localhost". We will be using the root user, but that could change in the future. The password is based on what you set up at instalation of the MySQL-Server. Last we want it to go directly into using the "bb_cards" database.
 
-Next we will install two programs we need.
+<code>cursor = cnn.cursor()</code>
 
-<code>$ sudo apt-get -y install apache2 & mysql-server</code>
+While we have created a connection, we need a cursor to actual perform the actions that we desire to the database. As the name implies the cursor acts like the cursor when inputing commands through the command line interface. The cursor will execute queries that are provided as strings.
 
-Apache2 will be our web server that handles all incoming requests on port 80. It will also help us server static files. 
+<code>createStatement = """CREATE TABLE buy_list(
+        sport varchar(2) NOT NULL,
+        item_desc varchar(50) NOT NULL,
+        buy_price int(10) NOT NULL
+    ) ENGINE=MyISAM;    
+    """</code>
 
-MySQL will be our Database. During the instalation process it will ask you to type in a new password for the root user. 
-We can log into MySQL using the following command.
-
-<code>$ mysql -u root -p</code>
-
-Next it will ask you to type the password you assign and press enter.
-
-At this point we can create the "bb_cards" database that will be used in this project.
-
-<code>mysql> CREATE DATABASE bb_cards;</code>
-<code>quit</code>
-
-The creation of the Tables and insertion of data will be accomplish later.
-
-In order for Python to talk to the Database we need a connector. While there are various available, we will by using PyMySQL.
-
-First we need pip installed. Pip is the Python package manager that will allow us to install the needed connector.
-
-<code>$ sudo apt-get install python3-pip</code>
-
-After pip has been installed we can install the module
-
-<code>$ sudo pip3 install pymysql</code>
-
-The official mysql-connector-python can only be installed directly from their website. So we just download it and install it.
-
-We will confirm that we have the correct version of Python.
-
-<code>$ python3 -V</code><br />
-<code>Python 3.4.3</code>
-
-Next we will need Git to clone all the files.
-
-<code>$ sudo apt-get install git</code>
-
-Clone this repo
-
-<code>$ git clone https://github.com/mikeful92/Python-MySQL-Project.git</code>
+Here we are creating a variable that will hold the query for creation of the first table as a string. This allows us to make changes directly to the variable and re-use the query if necesarry.
 
 
+<code>cursor.execute(createStatement)
+    print("Table created")</code>
 
+The cursor has an execute() function that will run our desired query from a string. We do not receive confirmation of the completion so we print directly to the command line.
 
+<code>insertStatement = """INSERT INTO `buy_list` (`sport`, `item_desc`, `buy_price`) VALUES
+    ('BB', '1960 Topps Mantle #350 PSA 4', 199),
+    ('FB', '1961 Topps Unitas #1 PSA 3', 299),
+    ('BK', '1986-1987 Jordan #26 PSA 8', 400),
+    ('HK', '1954 Parkhurst Howe #24 PSA 4', 500),
+    ('BB', '1983 Topps Wax Case', 2300),
+    ('BK', '1989-90 Fleer Wax Case', 300);
+    """</code>
 
+This is similar to the creation variable, but now we are inserting data into the table. By having this variable we can easily add or delete more items that we would like to have on our starting table.
+
+<code>cursor.execute(insertStatement)
+    print("Data inserted")
+    cnn.commit()
+    print("Changes commited") </code>
+
+Here we have another execute function. After we have completed our changes to the database we commit those changes. This is done using the commit() function from the connection object(Not the cursor object).
+
+<code>except pymysql.MySQLError as e:
+    print('Got error {!r}, errno is {}'.format(e, e.args[0]))
+
+finally:
+    if cursor:
+        cursor.close()
+    if cnn:
+        cnn.close()</code>
+
+We include some exception handling to catch any errors and finally close the cursor and the connection.
