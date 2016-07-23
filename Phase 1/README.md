@@ -19,20 +19,19 @@ The second rule will be "Custom TCP Rule", Port Range "8080", Source "Anywhere".
 We can start with two commands for our new instance to make sure that it is up to date.
 
 
-<code>sudo apt-get update
+<code>sudo apt-get update <br>
 sudo apt-get dist-upgrade</code>
-
 
 Next we will install two programs we need.
 
-'sudo apt-get -y install apache2 & mysql-server'
+<code>sudo apt-get -y install apache2 & mysql-server</code>
 
 Apache2 will be our web server that handles all incoming requests on port 80. It will also help us server static files. 
 
 MySQL will be our Database. In order for Python to talk to the Database we need a connector. We can install it with the folllowing set of lines.
 
-'wget http://dev.mysql.com/get/Downloads/Connector-Python/mysql-connector-python_2.1.3-1ubuntu15.04_all.deb'
-'sudo dpkg -i mysql-connector-python_2.1.3-1ubuntu15.04_all.deb'
+<code>wget http://dev.mysql.com/get/Downloads/Connector-Python/mysql-connector-python_2.1.3-1ubuntu15.04_all.deb<br>
+sudo dpkg -i mysql-connector-python_2.1.3-1ubuntu15.04_all.deb</code>
 
 The official mysql-connector-python can only be installed directly from their website. So we just download it and install it.
 
