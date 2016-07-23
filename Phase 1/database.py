@@ -35,10 +35,12 @@ try:
     print("Changes commited")
 
 
-except MySQLError as e:
+except pymysql.MySQLError as e:
     print('Got error {!r}, errno is {}'.format(e, e.args[0]))
 
 finally:
-    cursor.close()
-    cnn.close()
+    if cursor:
+        cursor.close()
+    if cnn:
+        cnn.close()
 
