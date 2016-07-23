@@ -1,7 +1,7 @@
 import pymysql
 
 try:
-    cnn = pymysql.connector.connect(
+    cnn = pymysql.connect(
         host="localhost",
         user="root",  # your username
         password='root',
