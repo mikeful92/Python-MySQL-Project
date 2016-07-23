@@ -18,8 +18,10 @@ The second rule will be "Custom TCP Rule", Port Range "8080", Source "Anywhere".
 
 We can start with two commands for our new instance to make sure that it is up to date.
 
-'sudo apt-get update'
-'sudo apt-get dist-upgrade'
+
+<code>sudo apt-get update
+sudo apt-get dist-upgrade</code>
+
 
 Next we will install two programs we need.
 
