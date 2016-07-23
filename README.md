@@ -18,28 +18,35 @@ The second rule will be "Custom TCP Rule", Port Range "8080", Source "Anywhere".
 
 We can start with two commands for our new instance to make sure that it is up to date.
 
-<code>$ sudo apt-get update</code><br />
-<code>$ sudo apt-get dist-upgrade</code>
+```$ sudo apt-get update
+$ sudo apt-get dist-upgrade
+```
 
 (Press "Y" when prompted)
 
 Next we will install two programs we need.
 
-<code>$ sudo apt-get -y install apache2 & mysql-server</code>
+```
+$ sudo apt-get -y install apache2 & mysql-server
+```
 
 Apache2 will be our web server that handles all incoming requests on port 80. It will also help us server static files. 
 
 MySQL will be our Database. During the instalation process it will ask you to type in a new password for the root user. 
 We can log into MySQL using the following command.
 
-<code>$ mysql -u root -p</code>
+```
+$ mysql -u root -p
+```
 
 Next it will ask you to type the password you assign and press enter.
 
 At this point we can create the "bb_cards" database that will be used in this project.
 
-<code>mysql> CREATE DATABASE bb_cards;</code>
-<code>quit</code>
+```
+mysql> CREATE DATABASE bb_cards;
+quit
+```
 
 The creation of the Tables and insertion of data will be accomplish later.
 
@@ -47,24 +54,34 @@ In order for Python to talk to the Database we need a connector. While there are
 
 We will confirm that we have the correct version of Python.
 
-<code>$ python3 -V</code><br />
-<code>Python 3.4.3</code>
+```
+$ python3 -V
+Python 3.4.3
+```
 
 First we need pip installed. Pip is the Python package manager that will allow us to install the needed connector.
 
-<code>$ sudo apt-get install python3-pip</code>
+```
+$ sudo apt-get install python3-pip
+```
 
 After pip has been installed we can install the module
 
-<code>$ sudo pip3 install pymysql</code>
+```
+$ sudo pip3 install pymysql
+```
 
 Next we will need Git to clone all the files.
 
-<code>$ sudo apt-get install git</code>
+```
+$ sudo apt-get install git
+```
 
 Clone this repo
 
-<code>$ git clone https://github.com/mikeful92/Python-MySQL-Project.git</code>
+```
+$ git clone https://github.com/mikeful92/Python-MySQL-Project.git
+```
 
 
 Now we are ready to start with Phase 1
