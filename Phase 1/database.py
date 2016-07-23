@@ -1,7 +1,7 @@
-import mysql.connector
+import pymysql
 
 try:
-    cnn = mysql.connector.connect(
+    cnn = pymysql.connector.connect(
         host="localhost",
         user="root",  # your username
         password='root',
@@ -35,13 +35,8 @@ try:
     print("Changes commited")
 
 
-except mysql.connector.Error as e:
-    if e.errno == mysql.connector.errorcode.ER_ACCESS_DENIED_ERROR:
-        print("Something is wrong with username or Password")
-    elif e.errno == mysql.connector.errorcode.ER_BAD_DB_ERROR:
-        print("Database Does not exist")
-    else:
-        print(e)
+except MySQLError as e:
+    print('Got error {!r}, errno is {}'.format(e, e.args[0]))
 
 finally:
     cursor.close()
