@@ -29,7 +29,7 @@ Apache2 will be our web server that handles all incoming requests on port 80. It
 
 MySQL will be our Database. In order for Python to talk to the Database we need a connector. We can install it with the folllowing set of lines.
 
-<code>wget http://dev.mysql.com/get/Downloads/Connector-Python/mysql-connector-python_2.1.3-1ubuntu15.04_all.deb<br />
+<code>wget http://dev.mysql.com/get/Downloads/Connector-Python/mysql-connector-python_2.1.3-1ubuntu15.04_all.deb  
 sudo dpkg -i mysql-connector-python_2.1.3-1ubuntu15.04_all.deb</code>
 
 The official mysql-connector-python can only be installed directly from their website. So we just download it and install it.
