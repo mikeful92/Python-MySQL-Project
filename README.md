@@ -1,5 +1,9 @@
 # Card Project
 
+This introduction will guide on how to set up the enviroment to run the Card Project/Server.
+
+The goal of Phase 1 is to have a 
+
 ## Set-up
 
 ### Server

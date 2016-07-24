@@ -232,8 +232,30 @@ We will be composing the body of the HTML response as a string. We use the outpu
 We check to see if the results variable from the SQL query has any results. If it does, we preceed to iterate thru the rows in the results and append them as HTML list to the output variable.
 If there is no results, we attach a "No Matching Inventory" message to the output string.
 
+```python
+    output += "</body></html>"
+    self.wfile.write(bytes(output, "utf8"))
+    return
+```
+
+Finish the HTML string by appending the body and html tag. Then we write to contents of the string to the output stream. Return the function to let the handler know we are done.
+
+```python
+except IOError:
+    self.send_error(404, 'File Not Found: {}'.format(self.path))
+```
+
+Exception handler catches if the path leads to an error. 
+
+## Up next
+
+This script will run a server that can handle HTTP request to the specific port. As we can see when we pull up the page on a browser, it does not server static files such as styles.css or favicon. This will be steps for the next part.
 
 
 ## Resources
 
+http.server module: https://docs.python.org/3/library/http.server.html
+
 BaseHTTPServer: https://pymotw.com/2/BaseHTTPServer/index.html#module-BaseHTTPServer
+
+MultithreadedSimpleHTTPServer: https://github.com/Nakiami/MultithreadedSimpleHTTPServer
